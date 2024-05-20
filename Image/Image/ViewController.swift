@@ -40,6 +40,34 @@ class ViewController: UIViewController {
         squareView.layer.insertSublayer(gradientLayer, at: 0) // 첫 번째 레이어
         
         view.addSubview(squareView)
+        
+        // MARK: - Image Effect
+        let imageView = UIImageView(image: UIImage(systemName: "hare.fill"))
+        imageView.frame = CGRect(x: 50, y: 50, width: 100, height: 100)
+        imageView.tintColor = .purple
+        imageView.contentMode = .scaleAspectFit // 이미지 비율 유지, 프레임에 딱 맞게
+        
+        imageView.layer.cornerRadius = imageView.frame.width / 2 // 반원
+        imageView.clipsToBounds = true
+        
+        // 그림자
+        imageView.layer.shadowColor = UIColor.red.cgColor
+        imageView.layer.shadowOpacity = 0.8 // 그림자의 투명도 조절
+        imageView.layer.shadowOffset = CGSize(width: 10, height: 10)
+        imageView.layer.shadowRadius = 6
+        
+        imageView.layer.borderColor = UIColor.blue.cgColor
+        imageView.layer.borderWidth = 10
+        
+        imageView.alpha = 0.75 // 뷰의 투명도 조절
+        
+        self.view.addSubview(imageView)
+        
+        let flagImageView = UIImageView(image: UIImage(systemName: "flag"))
+        flagImageView.frame = CGRect(x: 50, y: 200, width: 100, height: 50)
+        flagImageView.contentMode = .scaleToFill // 이미지 비율 유지 X, 프레임에 가득 채워지게
+        flagImageView.contentMode = .scaleAspectFill // 프레임 밖으로 넘쳐서 잘림
+        self.view.addSubview(flagImageView)
     }
 
 
