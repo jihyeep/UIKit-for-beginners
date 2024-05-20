@@ -86,48 +86,80 @@ class ViewController: UIViewController {
         
         // MARK: - WebView 사용
         
-        let webView = WKWebView()
-        webView.translatesAutoresizingMaskIntoConstraints = false
-
-        let htmlString = """
-        <html>
-        <head>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-                body {
-                    font-family: -apple-system, Helvetica, Arial, sans-serif;
-                    font-size: 2rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-                .italic {
-                    font-style: italic;
-                }
-                .blue {
-                    color: blue;
-                }
-                .underline {
-                    text-decoration: underline;
-                }
-            </style>
-        </head>
-        <body>
-            <span class="italic underline">Hello,&nbsp;</span><span class="blue underline">World</span>
-        </body>
-        </html>
-        """
-
-        webView.loadHTMLString(htmlString, baseURL: nil)
-
-        view.addSubview(webView)
-
+//        let webView = WKWebView()
+//        webView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        let htmlString = """
+//        <html>
+//        <head>
+//            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//            <style>
+//                body {
+//                    font-family: -apple-system, Helvetica, Arial, sans-serif;
+//                    font-size: 2rem;
+//                    display: flex;
+//                    align-items: center;
+//                    justify-content: center;
+//                }
+//                .italic {
+//                    font-style: italic;
+//                }
+//                .blue {
+//                    color: blue;
+//                }
+//                .underline {
+//                    text-decoration: underline;
+//                }
+//            </style>
+//        </head>
+//        <body>
+//            <span class="italic underline">Hello,&nbsp;</span><span class="blue underline">World</span>
+//        </body>
+//        </html>
+//        """
+//
+//        webView.loadHTMLString(htmlString, baseURL: nil)
+//
+//        view.addSubview(webView)
+//
+//        NSLayoutConstraint.activate([
+//            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+//        ])
+        
+        // MARK: - UIImageView
+        
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let imageView = UIImageView(image: UIImage(systemName: "creditcard"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            imageView.widthAnchor.constraint(equalToConstant: 30),
+            imageView.heightAnchor.constraint(equalToConstant: 30)
         ])
+        
+        stackView.addArrangedSubview(imageView)
+        
+        let label = UILabel()
+        label.text = "Credit Card"
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        stackView.addArrangedSubview(label)
+        view.addSubview(stackView)
+        
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 250)
+        ])
+        
     }
 
 
