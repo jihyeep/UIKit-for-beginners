@@ -11,6 +11,11 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // label에 padding 주기
+        let paddingView = UIView()
+        paddingView.translatesAutoresizingMaskIntoConstraints = false
+        paddingView.backgroundColor = .blue
        
         let label = UILabel()
 //        label.text = "This is a long text that should wrap into multiple lines if it exceeds the width of the label."
@@ -29,7 +34,8 @@ class ViewController: UIViewController {
         
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(label)
+        paddingView.addSubview(label)
+        view.addSubview(paddingView)
         
         // 여러 줄 실습
 //        NSLayoutConstraint.activate([
@@ -39,11 +45,24 @@ class ViewController: UIViewController {
 //        ])
         
         // 둥근 모서리 실습
+//        NSLayoutConstraint.activate([
+//            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+//            label.widthAnchor.constraint(equalToConstant: 200),
+//            label.heightAnchor.constraint(equalToConstant: 40)
+//        ])
+        
+        // paddin 실습
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-            label.widthAnchor.constraint(equalToConstant: 200),
-            label.heightAnchor.constraint(equalToConstant: 40)
+            label.topAnchor.constraint(equalTo: paddingView.topAnchor, constant: 20),
+            label.bottomAnchor.constraint(equalTo: paddingView.bottomAnchor, constant: -20),
+            label.leadingAnchor.constraint(equalTo: paddingView.leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(equalTo: paddingView.trailingAnchor, constant: -20),
+            
+            paddingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            paddingView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+            paddingView.widthAnchor.constraint(equalToConstant: 200),
+            paddingView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
 
