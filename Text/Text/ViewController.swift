@@ -13,29 +13,29 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // label에 padding 주기
-        let paddingView = UIView()
-        paddingView.translatesAutoresizingMaskIntoConstraints = false
-        paddingView.backgroundColor = .blue
-       
-        let label = UILabel()
+//        let paddingView = UIView()
+//        paddingView.translatesAutoresizingMaskIntoConstraints = false
+//        paddingView.backgroundColor = .blue
+//       
+//        let label = UILabel()
 //        label.text = "This is a long text that should wrap into multiple lines if it exceeds the width of the label."
-        label.text = "Stylized Text"
-        label.textColor = .yellow
-        label.backgroundColor = .red
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 17)
+//        label.text = "Stylized Text"
+//        label.textColor = .yellow
+//        label.backgroundColor = .red
+//        label.textAlignment = .center
+//        label.font = UIFont.systemFont(ofSize: 17)
         
 //        label.numberOfLines = 0 // 여러 줄 표시
 //        label.lineBreakMode = .byWordWrapping // 경계를 넘어갈 때 단어의 줄 변경
         
         // 둥근 모서리 적용
-        label.layer.cornerRadius = 10
-        label.clipsToBounds = true
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        paddingView.addSubview(label)
-        view.addSubview(paddingView)
+//        label.layer.cornerRadius = 10
+//        label.clipsToBounds = true
+//        
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        paddingView.addSubview(label)
+//        view.addSubview(paddingView)
         
         // 여러 줄 실습
 //        NSLayoutConstraint.activate([
@@ -53,16 +53,34 @@ class ViewController: UIViewController {
 //        ])
         
         // paddin 실습
+//        NSLayoutConstraint.activate([
+//            label.topAnchor.constraint(equalTo: paddingView.topAnchor, constant: 20),
+//            label.bottomAnchor.constraint(equalTo: paddingView.bottomAnchor, constant: -20),
+//            label.leadingAnchor.constraint(equalTo: paddingView.leadingAnchor, constant: 20),
+//            label.trailingAnchor.constraint(equalTo: paddingView.trailingAnchor, constant: -20),
+//            
+//            paddingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            paddingView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+//            paddingView.widthAnchor.constraint(equalToConstant: 200),
+//            paddingView.heightAnchor.constraint(equalToConstant: 100)
+//        ])
+        
+        // MARK: - 구간별 스타일링(잘 안 씀)
+        
+        let attributedString = NSMutableAttributedString(string: "Hello, World")
+        attributedString.addAttribute(.font, value: UIFont.italicSystemFont(ofSize: 20), range: NSRange(location: 0, length: 5))
+        attributedString.addAttribute(.foregroundColor, value: UIColor.blue, range: NSRange(location: 7, length: 5))
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: 12))
+        
+        let label = UILabel()
+        label.attributedText = attributedString
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(label)
+        
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: paddingView.topAnchor, constant: 20),
-            label.bottomAnchor.constraint(equalTo: paddingView.bottomAnchor, constant: -20),
-            label.leadingAnchor.constraint(equalTo: paddingView.leadingAnchor, constant: 20),
-            label.trailingAnchor.constraint(equalTo: paddingView.trailingAnchor, constant: -20),
-            
-            paddingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            paddingView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-            paddingView.widthAnchor.constraint(equalToConstant: 200),
-            paddingView.heightAnchor.constraint(equalToConstant: 100)
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 200)
         ])
     }
 
