@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        displayLabel.text = ""
+        textView.delegate = self
         
         textField.borderStyle = .roundedRect
         secureTextField.borderStyle = .roundedRect
@@ -29,6 +29,13 @@ class ViewController: UIViewController {
         textView.layer.borderWidth = 1.0
         textView.layer.cornerRadius = 5.0
         textView.font = UIFont.systemFont(ofSize: 16.0)
+    }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        displayLabel.text = ""
+        textView.text = "Enter your text here..."
+        textView.textColor = UIColor.lightGray
     }
 
     // 버튼 눌렀을 때 입력된 내용이 displayLabel에 출력
@@ -42,6 +49,22 @@ class ViewController: UIViewController {
         textField.text = ""
         secureTextField.text = ""
         textView.text = ""
+    }
+}
+
+extension ViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = ""
+            textView.textColor = UIColor.black
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Enter your text here..."
+            textView.textColor = UIColor.lightGray
+        }
     }
 }
 
