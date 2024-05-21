@@ -17,6 +17,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return pickerView
     }()
     
+    let datePicker = {
+        let picker = UIDatePicker()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+    
     let options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"]
     let options2 = ["옵션 1", "옵션 2", "옵션 3", "옵션 4", "옵션 5"]
     
@@ -25,10 +31,30 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         view.addSubview(pickerView)
         
+//        NSLayoutConstraint.activate([
+//            pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            pickerView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+//        ])
+        
+        let today = Date()
+        var dateComponents = DateComponents()
+        dateComponents.year = 1
+        let oneYearFromNow = Calendar.current.date(byAdding: dateComponents, to: today)
+        
+        datePicker.minimumDate = today
+        datePicker.maximumDate = oneYearFromNow
+        
+        datePicker.addAction(UIAction { [weak self] _ in
+            print("sender: \(self?.datePicker.date.formatted() ?? "N/A")")
+        }, for: .valueChanged)
+            
+        view.addSubview(datePicker)
+        
         NSLayoutConstraint.activate([
-            pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pickerView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            datePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            datePicker.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+        
     }
     
     // MARK: - UIPickerViewDelegate
