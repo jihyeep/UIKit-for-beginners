@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import SafariServices
 
 class ViewController: UIViewController {
     private lazy var webView: WKWebView = {
@@ -28,7 +29,11 @@ class ViewController: UIViewController {
         linkButton.addAction(UIAction { [weak self] _ in
             if let url = URL(string: "https://www.apple.com") {
 //                UIApplication.shared.open(url)
-                self?.openInWebView(url: url)
+//                self?.openInWebView(url: url)
+                // 사파리 뷰
+                let safariViewController = SFSafariViewController(url: url)
+                safariViewController.modalPresentationStyle = .pageSheet // 모달 뷰 스타일링
+                self?.present(safariViewController, animated: true)
             }
         }, for: .touchUpInside)
         
