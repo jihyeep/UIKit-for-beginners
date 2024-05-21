@@ -76,6 +76,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             colorPicker.supportsAlpha = false // 투명도 지원 X
             colorPicker.selectedColor = self?.view.backgroundColor ?? .white
             self?.present(colorPicker, animated: true)
+            // present는 ViewController가 죽으면 어차피 죽기 때문에 weak 대신 unowned를 써도 될 듯?
         }, for: .touchUpInside)
         
         self.view.addSubview(button)
