@@ -27,7 +27,17 @@ class ViewController: UIViewController {
         // LongPress
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         longPressGesture.minimumPressDuration = 2.0
-        longPressGesture.view?.addGestureRecognizer(longPressGesture)
+        rectangle.addGestureRecognizer(longPressGesture)
+        
+        // Pinch
+        let imageView = UIImageView(image: UIImage(systemName: "star.fill"))
+        imageView.frame = CGRect(x: 100, y: 300, width: 200, height: 200)
+        imageView.isUserInteractionEnabled = true
+        
+        view.addSubview(imageView)
+        
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
+        imageView.addGestureRecognizer(pinchGesture)
         
     }
     
@@ -38,8 +48,16 @@ class ViewController: UIViewController {
     }
     
     @objc func handleLongPress(_ sender: UILongPressGestureRecognizer) {
+        print("\(sender.state)")
         if let view = sender.view, sender.state == .began {
-            view.backgroundColor = (view.backgroundColor == .green) ? .red : .green
+            view.backgroundColor = (view.backgroundColor == .yellow) ? .red : .yellow
+        }
+    }
+    
+    @objc func handlePinch(_ sender: UIPinchGestureRecognizer) {
+        print(sender.scale)
+        if let view = sender.view {
+            view.transform = view.transform.scaledBy(x: sender.scale, y: sender.scale) // 손을 대는 순간 1
         }
     }
 
