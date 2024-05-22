@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIGestureRecognizerDelegate {
     var minSize: CGSize = CGSize(width: 100, height: 100)
     var maxSize: CGSize = CGSize(width: 300, height: 300)
 
@@ -50,6 +50,30 @@ class ViewController: UIViewController {
         let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation))
         imageView.addGestureRecognizer(rotationGesture)
         
+        // Pan
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        imageView.addGestureRecognizer(panGesture)
+        
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
+        imageView.addGestureRecognizer(pinchGesture)
+        
+        rotationGesture.delegate = self
+        panGesture.delegate = self
+        pinchGesture.delegate = self
+    }
+    
+    // 단일 제스처 허용 여부
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer is UIPanGestureRecognizer {
+            return true
+        } else {
+            return true // 복합 제스처를 위해
+        }
+    }
+    
+    // 복합 제스처 허용 여부
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
@@ -67,10 +91,10 @@ class ViewController: UIViewController {
     
     @objc func handlePinch(_ sender: UIPinchGestureRecognizer) {
         // 단순 PinchGesture
-//        print("\(sender.scale)")
-//        if let view = sender.view {
-//            view.transform = view.transform.scaledBy(x: sender.scale, y: sender.scale) // 손을 대는 순간 1
-//        }
+        print("\(sender.scale)")
+        if let view = sender.view {
+            view.transform = view.transform.scaledBy(x: sender.scale, y: sender.scale) // 손을 대는 순간 1
+        }
         
         // 최대/최소 크기 지정 방법 1 - 확 커지면 최대를 넘어가는 문제 발생
 //        guard let view = sender.view else { return }
@@ -112,6 +136,14 @@ class ViewController: UIViewController {
         if let view = sender.view {
             view.transform = view.transform.rotated(by: sender.rotation)
             sender.rotation = 0
+        }
+    }
+    
+    @objc func handlePan(_ sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: view)
+        if let view = sender.view {
+            view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
+            sender.setTranslation(.zero, in: view)
         }
     }
 
