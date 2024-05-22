@@ -8,6 +8,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    var minSize: CGSize = CGSize(width: 100, height: 100)
+    var maxSize: CGSize = CGSize(width: 300, height: 300)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,10 +57,45 @@ class ViewController: UIViewController {
     }
     
     @objc func handlePinch(_ sender: UIPinchGestureRecognizer) {
-        print(sender.scale)
-        if let view = sender.view {
-            view.transform = view.transform.scaledBy(x: sender.scale, y: sender.scale) // 손을 대는 순간 1
-        }
+        // 단순 PinchGesture
+//        print(sender.scale)
+//        if let view = sender.view {
+//            view.transform = view.transform.scaledBy(x: sender.scale, y: sender.scale) // 손을 대는 순간 1
+//        }
+        
+        // 최대/최소 크기 지정 방법 1 - 확 커지면 최대를 넘어가는 문제 발생
+//        guard let view = sender.view else { return }
+//        
+//        let currentScale = sqrt(view.transform.a * view.transform.a + view.transform.c * view.transform.c)
+//        if sender.scale < 1.0  {
+//            if currentScale > 0.8 {
+//                view.transform = view.transform.scaledBy(x: sender.scale, y: sender.scale)
+//            }
+//        } else {
+//            if currentScale < 1.2 {
+//                view.transform = view.transform.scaledBy(x: sender.scale, y: sender.scale)
+//            }
+//        }
+        
+        // 최대/최소 크기 지정 방법 2
+        guard let viewToResize = sender.view else { return }
+        
+        // 현재 뷰의 크기
+        let currentSize = viewToResize.frame.size
+        
+        // 핀치 제스처 인식기의 scale 속성을 사용하여 크기 변경
+        let newWidth = currentSize.width * sender.scale
+        let newHeight = currentSize.height * sender.scale
+        
+        // 최소 및 최대 크기 제한 적용
+        let clampedWidth = max(minSize.width, min(newWidth, maxSize.width))
+        let clampedHeight = max(minSize.height, min(newHeight, maxSize.height))
+        
+        // 크기 변경 적용
+        viewToResize.bounds.size = CGSize(width: clampedWidth, height: clampedHeight)
+        
+        // 스케일 초기화
+        sender.scale = 1.0
     }
 
 }
