@@ -32,14 +32,23 @@ class ViewController: UIViewController {
         rectangle.addGestureRecognizer(longPressGesture)
         
         // Pinch
+//        let imageView = UIImageView(image: UIImage(systemName: "star.fill"))
+//        imageView.frame = CGRect(x: 100, y: 300, width: 200, height: 200)
+//        imageView.isUserInteractionEnabled = true
+//        
+//        view.addSubview(imageView)
+//        
+//        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
+//        imageView.addGestureRecognizer(pinchGesture)
+        
+        // Rotation
         let imageView = UIImageView(image: UIImage(systemName: "star.fill"))
-        imageView.frame = CGRect(x: 100, y: 300, width: 200, height: 200)
+        imageView.frame = CGRect(x: view.bounds.midX-100, y: view.bounds.midY-100, width: 200, height: 200) // CGRect의 x,y는 좌측 상단에서 시작함
         imageView.isUserInteractionEnabled = true
-        
         view.addSubview(imageView)
-        
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
-        imageView.addGestureRecognizer(pinchGesture)
+
+        let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation))
+        imageView.addGestureRecognizer(rotationGesture)
         
     }
     
@@ -58,7 +67,7 @@ class ViewController: UIViewController {
     
     @objc func handlePinch(_ sender: UIPinchGestureRecognizer) {
         // 단순 PinchGesture
-//        print(sender.scale)
+//        print("\(sender.scale)")
 //        if let view = sender.view {
 //            view.transform = view.transform.scaledBy(x: sender.scale, y: sender.scale) // 손을 대는 순간 1
 //        }
@@ -96,6 +105,14 @@ class ViewController: UIViewController {
         
         // 스케일 초기화
         sender.scale = 1.0
+    }
+    
+    @objc func handleRotation(_ sender: UIRotationGestureRecognizer) {
+        print("\(sender.rotation)")
+        if let view = sender.view {
+            view.transform = view.transform.rotated(by: sender.rotation)
+            sender.rotation = 0
+        }
     }
 
 }
