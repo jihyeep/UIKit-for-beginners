@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     let resultLabelOne = UILabel()
     let resultLabelTwo = UILabel()
     
+    lazy var textFieldAction = UIAction(handler: textFieldDidChange)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -32,8 +34,19 @@ class ViewController: UIViewController {
         //        }, for: .editingChanged)
         
         // TextField 핸들링 방법 2
-        formOneTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        formTwoTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+//        formOneTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+//        formTwoTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        
+    }
+    // TextField 핸들링 방법 3(액션 개체 생성) - 강한 참조가 일어날 수 있기에 메모리 해제가 필요함
+    override func viewIsAppearing(_ animated: Bool) {
+        formOneTextField.addAction(textFieldAction, for: .editingChanged)
+        formTwoTextField.addAction(textFieldAction, for: .editingChanged)
+    }
+    // 메모리 해제
+    override func viewWillDisappear(_ animated: Bool) {
+        formOneTextField.removeAction(textFieldAction, for: .editingChanged)
+        formTwoTextField.removeAction(textFieldAction, for: .editingChanged)
     }
     
     func setupFormOne() {
@@ -91,6 +104,17 @@ class ViewController: UIViewController {
     
     // MARK: - TextField 핸들링 방법 2
     @objc func textFieldDidChange(_ textField: UITextField) {
+        if textField == formOneTextField {
+            resultLabelOne.text = "폼 #1 = \(textField.text ?? "")"
+        } else {
+            resultLabelTwo.text = "폼 #2 = \(textField.text ?? "")"
+        }
+    }
+    
+    // MARK: - TextField 핸들링 방법 3
+    func textFieldDidChange(_ action: UIAction) {
+        guard let textField = action.sender as? UITextField else { return }
+        
         if textField == formOneTextField {
             resultLabelOne.text = "폼 #1 = \(textField.text ?? "")"
         } else {
