@@ -39,7 +39,7 @@ class ViewController: UIViewController, NextViewControllerDelegate {
         button.addAction(UIAction { [weak self] _ in
             let nextViewController =  NextViewController()
             nextViewController.animal = Animal(name: "호랑이")
-            nextViewController.delegate = self
+            nextViewController.delegate = self // nextViewController의 delegate는 ViewController
             
             self?.show(nextViewController, sender: nil)
         }, for: .touchUpInside)
