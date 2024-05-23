@@ -13,6 +13,15 @@ class CustomCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setup()
+    }
+            
+    // 스토리보드를 위한 초기화
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setup() {
         // 안에 들어가는 이미지 크기를 프레임 비율에 맞게 설정
         animalImageView.contentMode = .scaleAspectFit
         animalImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,9 +41,9 @@ class CustomCell: UITableViewCell {
         ])
     }
     
-    // 스토리보드를 위한 초기화
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func configure(item: AnimalImage) {
+        animalImageView.image = item.image
+        nameLabel.text = item.name
     }
 }
 
@@ -131,8 +140,8 @@ class ViewController: UIViewController, UITableViewDataSource {
 //        config.text = animals[indexPath.row].name
 //        config.image = animals[indexPath.row].image
 //        cell.contentConfiguration = config
-        cell.animalImageView.image = animals[indexPath.row].image
-        cell.nameLabel.text = animals[indexPath.row].name
+        let animal: AnimalImage = animals[indexPath.row]
+        cell.configure(item: animal)
         return cell
     }
 }
