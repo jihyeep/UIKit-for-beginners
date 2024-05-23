@@ -28,11 +28,22 @@ class ViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
         view.addGestureRecognizer(tapGesture)
+    
+    }
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
         
         /// 키보드 올라오면 호출
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil) // 싱글턴 패턴 형태
         /// 키보드 내려가면 호출 -> 키보드를 내려가게 하는 함수는 아니기 때문에 제스처를 추가해줌
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+    
+    /// NotificationCenter(옵저버) 제거
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     /// 키보드 내리는 제스처
